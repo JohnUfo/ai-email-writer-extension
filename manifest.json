@@ -1,0 +1,9 @@
+{
+    "name": "Email Writer Assistent",
+    "description": "Ai-powered email reply generator",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+        "default_title": "Email Writer Assistant"
+    }
+}
