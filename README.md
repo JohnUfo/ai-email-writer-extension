@@ -49,6 +49,9 @@ If using a local API:
 
 ---
 
+## Related Projects
+- [Backend Repository](https://github.com/JohnUfo/ai-email-writer.git) (Required to run the extension)
+- [Chrome Extension](https://github.com/JohnUfo/ai-email-writer-front.git) (frontend for the AI-powered Email Reply Generator)
 ### Contributions
 Feel free to fork and submit pull requests to improve the extension!
 
