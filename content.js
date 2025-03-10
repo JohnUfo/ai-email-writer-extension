@@ -2,7 +2,7 @@ console.log("Email Writer Extension - Content Script Loaded");
 
 function createAIButton() {
     const button = document.createElement('div');
-    button.className = 'T-I J-J5-Ji aoO v7 T-I-atl L3';
+    button.className = 'T-I J-J5-Ji aoO v7 T-I-atl L3 ai-reply-button';
     button.style.marginRight = '8px';
     button.innerHTML = 'AI Reply';
     button.setAttribute('role', 'button');
@@ -30,14 +30,12 @@ function findComposeToolbar() {
 
 async function generateAIReply(emailContent) {
     try {
-        const response = await fetch('http://localhost:8080/api/email/generate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ emailContent, tone: 'professional' }),
+        const response = await chrome.runtime.sendMessage({
+            action: "generateAIReply",
+            emailContent: emailContent
         });
-
-        if (!response.ok) throw new Error('API Request Failed');
-        return await response.text();
+        if (response.error) throw new Error(response.error);
+        return response.reply;
     } catch (error) {
         console.error('Error generating AI reply:', error);
         throw error;
@@ -56,7 +54,6 @@ function injectButton() {
 
     console.log("Toolbar found, creating AI button");
     const button = createAIButton();
-    button.classList.add('ai-reply-button');
 
     button.addEventListener('click', async () => {
         try {
@@ -74,7 +71,7 @@ function injectButton() {
                 console.error('Compose box not found');
             }
         } catch (error) {
-            alert('Failed to generate AI reply');
+            alert('Failed to generate AI reply: ' + error.message);
         } finally {
             button.innerHTML = 'AI Reply';
             button.disabled = false;

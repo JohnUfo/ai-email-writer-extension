@@ -1,25 +1,19 @@
 {
-    "name": "Email Writer Assistent",
-    "description": "Ai-powered email reply generator",
-    "version": "1.0",
     "manifest_version": 3,
-    "permissions": ["activeTab","storage"],
-    "host_permissions" : ["http://localhost:8080/*", "*://mail.google.com/*"],
+    "name": "AI Email Writer",
+    "version": "1.0",
+    "description": "Generate AI-powered email replies in Gmail.",
+    "permissions": [
+        "activeTab",
+        "scripting"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
     "content_scripts": [
         {
-            "js": ["content.js"],
-            "matches": ["*://mail.google.com/*"],
-            "css" : ["content.css"],
-            "run_at": "document_end"
+            "matches": ["https://mail.google.com/*"],
+            "js": ["content.js"]
         }
-    ],
-    "web_accessible_resources": [
-        {
-            "resources": ["icons/*"],
-            "matches": ["*://mail.google.com/*"]
-        }
-    ],
-    "action": {
-        "default_title": "Email Writer Assistant"
-    }
+    ]
 }
